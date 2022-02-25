@@ -9,7 +9,6 @@ public class App {
 
     public static void main(String[] args) throws Exception {
 
-
         System.out.println("---------------------------------------");
         System.out.println("Chaabi bank\n");
         int choix;
@@ -44,11 +43,17 @@ public class App {
         System.out.println("donnez votre code :\t");
         String codeD = sc.next();
         if (crd.d.getNom().equals(nomD) && crd.d.getCode().equals(codeD)) {
+            System.out.println("\nbienvenue monsieur " + crd.d.getNom() + "\n");
             do {
-                System.out.println("\nbienvenue monsieur " + crd.d.getNom()+"\n");
                 System.out.println("consulter les employes :   1");
                 System.out.println("consulter les clients  :   2");
                 System.out.println("consulter les comptes  :   3");
+                System.out.println("ajouter un employe     :   4");
+                System.out.println("supprimer un employe   :   5");
+                System.out.println("ajouter un client      :   6");
+                System.out.println("supprimer un client    :   7");
+                System.out.println("ajouter un compte      :   8");
+                System.out.println("supprimer un compte    :   9");
                 choix = sc.nextInt();
                 switch (choix) {
                     case 1:
@@ -59,8 +64,79 @@ public class App {
                         break;
                     case 3:
                         crd.consulterComptes();
+                        break;
+                    case 4:
+                        System.out.println("donnez le code :\t");
+                        String code = sc.next();
+                        System.out.println("donnez le nom :\t");
+                        String nom = sc.next();
+                        System.out.println("donnez le prenom :\t");
+                        String prenom = sc.next();
+                        System.out.println("donnez le ville :\t");
+                        String ville = sc.next();
+                        System.out.println("donnez le fonction :\t");
+                        String fonction = sc.next();
+
+                        employe emp = new employe(nom, prenom, ville, code, fonction);
+                        crd.ajouterEmploye(emp);
+                        System.out.println(emp.toString() + "\nemploye est  bien ajouté");
+
+                        break;
+                    case 5:
+                        System.out.println("donnez le code de l'employe :\t");
+                        String codeE = sc.next();
+                        employe em = crd.consulterEmploye(codeE);
+                        if (em != null) {
+                            crd.supprimerEmploye(codeE);
+                            System.out.println("\nemploye est  bien supprimé\n");
+                        } else {
+                            System.out.println("\nemploye n'existe pas\n");
+                        }
+                        break;
+                    case 6:
+                        System.out.println("entrez le nom :\t");
+                        String nomC = sc.next();
+                        System.out.println("entrez le prenom :\t");
+                        String prenomC = sc.next();
+                        System.out.println("entrez le code :\t");
+                        String codeC = sc.next();
+                        System.out.println("entrez le ville :\t");
+                        String villeC = sc.next();
+
+                        client newClient = new client(nomC, prenomC, villeC, codeC);
+                        crd.ajouter(newClient);
+                        System.out.println("client ajoutée! \t" + newClient.toString());
+                        break;
+                    case 7:
+                        System.out.println("entrez le code du client");
+                        String codeClient = sc.next();
+                        crd.supprimer(codeClient);
+                        System.out.println("suprimée!!");
+                        break;
+                    case 8:
+                        System.out.println("entrez le code du client :\t");
+                        String codeclient = sc.next();
+
+                        System.out.println("entrez le type :\t");
+                        String type = sc.next();
+                        System.out.println("entrez le numero :\t");
+                        int numero = sc.nextInt();
+                        System.out.println("entrez le solde :\t");
+                        double solde = sc.nextDouble();
+
+                        compte cmpt = new compte(type, numero, solde);
+                        crd.ajouterCompte(codeclient, cmpt);
+                        break;
+                    case 9:
+                        System.out.println("entrez le code du client");
+                        String codeCl = sc.next();
+                        System.out.println("entrez le numero du compte");
+                        int num = sc.nextInt();
+                        crd.supprimerCompte(codeCl, num);
+                        System.out.println("\nsuprimée!!\n");
+                        break;
                 }
-            } while (choix < 4 && choix > 0);
+            } while (choix < 10 && choix > 0);
             login = true;
         } else {
             System.out.println("nom ou code incorrect");
@@ -111,9 +187,8 @@ public class App {
 
                 }
                 if (choix == 1) {
-                    String nom = sc.next();
                     System.out.println("entrez le nom :\t");
-                    nom = sc.next();
+                    String nom = sc.next();
                     System.out.println("entrez le prenom :\t");
                     String prenom = sc.next();
                     System.out.println("entrez le code :\t");
@@ -170,17 +245,16 @@ public class App {
         boolean login = false;
         int choix;
         System.out.print("donnez le code de votre compte : \n");
-        
+
         String code = sc.next();
         client c = crd.consulter(code);
 
-            if (c!=null){
-                login = true;
-                
+        if (c != null) {
+            login = true;
 
-                do{
-                    int compte = 0;
-                    int index = 0;
+            do {
+                int compte = 0;
+                int index = 0;
 
                 for (compte com : c.getComptes()) {
                     System.out.println(com.toString());
@@ -195,16 +269,16 @@ public class App {
                 if (choix == 1) {
                     System.out.print("donnez le prix que vous voulez verser :\t");
                     double money = sc.nextDouble();
-                    crd.verser(c,compte, money);
+                    crd.verser(c, compte, money);
                 } else if (choix == 2) {
                     System.out.print("donnez le prix que vous voulez retirer :\t");
                     double money = sc.nextDouble();
-                    crd.retirer(c,compte, money);
+                    crd.retirer(c, compte, money);
                 }
 
-            }while(choix>0&&choix<3);
+            } while (choix > 0 && choix < 3);
 
-            }
+        }
         if (!login) {
             System.out.println("code incorrect");
             return loginC();

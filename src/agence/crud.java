@@ -31,7 +31,7 @@ public class crud implements Iclient<client>, Icompte<compte>, Iemploye<employe>
         ajouterCompte("1bb", com2);
         ajouterCompte("Ffb4", com3);
 
-        employe emp = new employe("conor", "mcgregor", "dublin", "0826", "courant");
+        employe emp = new employe("conor", "mcgregor", "dublin", "0826", "chef");
         ajouterEmploye(emp);
 
     }
