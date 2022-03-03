@@ -4,14 +4,14 @@ import java.util.Date;
 
 public class compte {
     private String type;
-    private int numero;
+    private String numero;
     private double solde;
 
     private Date date = new Date();
     private double max =4000;
     private int day;
 
-    public compte(String type, int numero, double solde) {
+    public compte(String type, String numero, double solde) {
 
         if (type.equals("courant") || type.equals("épargne")) {
             this.type = type;
@@ -41,7 +41,7 @@ public class compte {
 
 
 
-    public int getNumero() {
+    public String getNumero() {
         return numero;
     }
 
@@ -53,7 +53,7 @@ public class compte {
         return type;
     }
 
-    public void setNumero(int numero) {
+    public void setNumero(String numero) {
         this.numero = numero;
     }
 

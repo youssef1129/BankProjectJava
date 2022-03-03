@@ -1,4 +1,4 @@
-package agence;
+package agence.service;
 
 import agence.models.*;
 import agence.intefaces.*;
@@ -11,9 +11,10 @@ public class crud implements Iclient<client>, Icompte<compte>, Iemploye<employe>
     HashMap<String, compte> compteList;
     HashMap<String, employe> employeList;
 
-    directeur d = new directeur("dana", "white", "fes", "A111", "directeur");
+    public directeur d = new directeur("dana", "white", "fes", "A111", "directeur");
 
     public crud() {
+
         this.clientList = new HashMap<String, client>();
         this.compteList = new HashMap<String, compte>();
         this.employeList = new HashMap<String, employe>();
@@ -23,9 +24,9 @@ public class crud implements Iclient<client>, Icompte<compte>, Iemploye<employe>
         ajouter(c);
         ajouter(c2);
 
-        compte com = new compte("courant", 4343, 1230);
-        compte com2 = new compte("épargne", 2323, 2430);
-        compte com3 = new compte("courant", 3443, 4230);
+        compte com = new compte("courant", "4343", 1230);
+        compte com2 = new compte("épargne", "2323", 2430);
+        compte com3 = new compte("courant", "3443", 4230);
 
         ajouterCompte("1bb", com);
         ajouterCompte("1bb", com2);
@@ -33,7 +34,10 @@ public class crud implements Iclient<client>, Icompte<compte>, Iemploye<employe>
 
         employe emp = new employe("conor", "mcgregor", "dublin", "0826", "chef");
         ajouterEmploye(emp);
+        System.out.println(d.toString());
 
+        System.out.println("---------------------------------------");
+        System.out.println("Chaabi bank by youssef maazouz\n");
     }
 
     @Override
@@ -85,8 +89,7 @@ public class crud implements Iclient<client>, Icompte<compte>, Iemploye<employe>
                     if (com.setTImeAndMax(argent)) {
                         com.setSolde(com.getSolde() - argent);
                         System.out.println("\n votre noveau solde est : " + com.getSolde() + "\n");
-                    }
-                    else{
+                    } else {
                         System.out.println("\n vous avez achevez le max (4000)\n");
                     }
                 }
@@ -103,10 +106,14 @@ public class crud implements Iclient<client>, Icompte<compte>, Iemploye<employe>
     }
 
     @Override
-    public void supprimerCompte(String codeC, int numero) {
+    public void supprimerCompte(String codeC, String numero) {
         client cc = consulter(codeC);
-        compteList.remove(String.valueOf(numero));
-        deleteFromComptes(cc, consulterCompte(numero));
+        if (cc == null) {
+            System.out.println("le code " + codeC + " n'existe pas");
+        } else {
+            compteList.remove(String.valueOf(numero));
+            deleteFromComptes(cc, consulterCompte(numero));
+        }
     }
 
     public void addToComptes(client c, compte com) {
@@ -120,8 +127,9 @@ public class crud implements Iclient<client>, Icompte<compte>, Iemploye<employe>
     @Override
     public void ajouterCompte(String code, compte com) {
         client cc = consulter(code);
-
-        if (cc.getComptes().size() < 3) {
+        if (cc == null) {
+            System.out.println("le code " + code + " n'existe pas");
+        } else if (cc.getComptes().size() < 3) {
             compteList.put(String.valueOf(com.getNumero()), com);
             addToComptes(cc, com);
             System.out.println("\ncompte ajoutée :\t" + com.toString() + "\n");
@@ -140,8 +148,8 @@ public class crud implements Iclient<client>, Icompte<compte>, Iemploye<employe>
     }
 
     @Override
-    public compte consulterCompte(int numero) {
-        return compteList.get(String.valueOf(numero));
+    public compte consulterCompte(String numero) {
+        return compteList.get(numero);
     }
 
     @Override

@@ -4,9 +4,9 @@ import agence.models.*;
 
 public interface Icompte<compte> {
     void ajouterCompte(String code,compte com);
-    void supprimerCompte(String codeC,int numero);
+    void supprimerCompte(String codeC,String numero);
     void consulterComptes();
-    compte consulterCompte(int numero);
+    compte consulterCompte(String numero);
     void verser(client c,int num,double argent);
     void retirer(client c,int num,double argent);
 }

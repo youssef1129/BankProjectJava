@@ -2,6 +2,7 @@ package agence;
 
 import java.util.Scanner;
 import agence.models.*;
+import agence.service.crud;
 
 public class App {
     public static Scanner sc = new Scanner(System.in);
@@ -9,8 +10,7 @@ public class App {
 
     public static void main(String[] args) throws Exception {
 
-        System.out.println("---------------------------------------");
-        System.out.println("Chaabi bank\n");
+        
         int choix;
 
         do {
@@ -79,7 +79,7 @@ public class App {
 
                         employe emp = new employe(nom, prenom, ville, code, fonction);
                         crd.ajouterEmploye(emp);
-                        System.out.println(emp.toString() + "\nemploye est  bien ajouté");
+                        System.out.println("\n"+emp.toString() + "\nemploye est  bien ajouté\n");
 
                         break;
                     case 5:
@@ -117,10 +117,14 @@ public class App {
                         System.out.println("entrez le code du client :\t");
                         String codeclient = sc.next();
 
+                        String type ="";
+                        do{
                         System.out.println("entrez le type :\t");
-                        String type = sc.next();
+                        type = sc.next();
+                        }while(!type.equals("courant")&&!type.equals("épargne"));
+
                         System.out.println("entrez le numero :\t");
-                        int numero = sc.nextInt();
+                        String numero = sc.next();
                         System.out.println("entrez le solde :\t");
                         double solde = sc.nextDouble();
 
@@ -131,7 +135,7 @@ public class App {
                         System.out.println("entrez le code du client");
                         String codeCl = sc.next();
                         System.out.println("entrez le numero du compte");
-                        int num = sc.nextInt();
+                        String num = sc.next();
                         crd.supprimerCompte(codeCl, num);
                         System.out.println("\nsuprimée!!\n");
                         break;
@@ -153,7 +157,7 @@ public class App {
         boolean book = false;
         employe emp = crd.consulterEmploye(codeD);
         if (emp != null) {
-            System.out.println("bienvenue monsieur " + emp.getNom());
+            System.out.println("\nbienvenue monsieur " + emp.getNom()+"\n");
             book = true;
             int choix;
 
@@ -177,7 +181,7 @@ public class App {
                 }
                 if (choix == 6) {
                     System.out.println("entrez le numero du compte :\t");
-                    int numero = sc.nextInt();
+                    String numero = sc.next();
                     compte com = crd.consulterCompte(numero);
                     try {
                         System.out.println("\n" + com.toString() + "\n");
@@ -198,17 +202,20 @@ public class App {
 
                     client newClient = new client(nom, prenom, ville, codec);
                     crd.ajouter(newClient);
-                    System.out.println("client ajoutée! \t" + newClient.toString());
+                    System.out.println("\nclient ajoutée! \t" + newClient.toString()+"\n");
 
                 }
                 if (choix == 3) {
                     System.out.println("entrez le code du client :\t");
                     String codeclient = sc.next();
 
+                    String type ="";
+                    do{
                     System.out.println("entrez le type :\t");
-                    String type = sc.next();
+                    type = sc.next();
+                    }while(!type.equals("courant")&&!type.equals("épargne"));
                     System.out.println("entrez le numero :\t");
-                    int numero = sc.nextInt();
+                    String numero = sc.next();
                     System.out.println("entrez le solde :\t");
                     double solde = sc.nextDouble();
 
@@ -226,7 +233,7 @@ public class App {
                     System.out.println("entrez le code du client");
                     String codeClient = sc.next();
                     System.out.println("entrez le numero du compte");
-                    int numero = sc.nextInt();
+                    String numero = sc.next();
                     crd.supprimerCompte(codeClient, numero);
                     System.out.println("suprimée!!");
                 }
